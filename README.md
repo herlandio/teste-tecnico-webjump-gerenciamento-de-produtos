@@ -1,4 +1,4 @@
-# Sistema crud de produtos | categorias
+# Sistema basico de gerenciamento de produtos | categorias
 
 O sistema foi criado com arquitetura MVC, composer para gerenciar dependências, para gerenciar rotas foi utilizado bramus router,
 foi adicionado a cdn bootstrap | font awesome | sweet alert | javascript para o front-end, no back-end foi utilizado PHP puro orientado a objetos
