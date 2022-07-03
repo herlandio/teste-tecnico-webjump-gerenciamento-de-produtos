@@ -1,0 +1,25 @@
+{
+    "name": "herlandio7/webjump-test",
+    "description": "teste web jump",
+    "autoload": {
+        "psr-4": {
+            "Controllers\\": "controllers",
+            "Config\\": "config",
+            "Database\\": "database",
+            "Help\\": "help",
+            "Models\\": "models",
+            "Views\\": "views"
+        }
+    },
+    "authors": [
+        {
+            "name": "herlandio",
+            "email": "herlandio7@gmail.com"
+        }
+    ],
+    "require": {
+      "ext-json": "*",
+        "bramus/router": "~1.6",
+      "ext-pdo": "*"
+    }
+}
