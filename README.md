@@ -6,7 +6,7 @@ com banco de dados mysql (PDO e transactions).
 
 - Clone o repositorio
 ```
-git clone https://herlandio7@bitbucket.org/herlandio7/webjump-teste.git
+git clone https://github.com/herlandio/webjump.git
 ```
 - Instale as dependências
 ```
