@@ -10,7 +10,6 @@ RUN apt-get update \
     && apt-get install -y unzip p7zip-full \
     && docker-php-ext-install pdo pdo_mysql mysqli \
     && a2enmod rewrite \
-    && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
-    && composer install
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 EXPOSE 8000
