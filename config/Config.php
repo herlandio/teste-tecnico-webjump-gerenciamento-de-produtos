@@ -18,7 +18,7 @@ abstract class Config {
      *
      * #################################################################################*/
 
-    const DBHOST = "mysql";
+    const DBHOST = "db-service";
     const DBUSER = "root";
     const DBPASSWORD = "root";
     const DBDATABASE = "products";

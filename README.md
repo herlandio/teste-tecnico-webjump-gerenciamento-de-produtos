@@ -10,11 +10,13 @@ com banco de dados mysql (PDO e transactions).
 git clone https://github.com/herlandio/gerenciamento-de-produtos.git
 ```
 
-- Para configurar as credenciais do banco de dados edite os arquivos `docker-compose.yml` e `config/Config.php`.
+- Basta executar: `kubectl apply -f k8s/` para subir a aplicação.
 
-- Para rodar a aplicação deverá ter o docker instalado na máquina!
+- Para rodar a aplicação deverá ter o docker e k8s habilitado!
 - Para executar a aplicação digite:
 
 ```
-docker-compose up
+kubectl port-forward svc/web-service 8000:80
 ```
+
+- Acesse a aplicação em `http://localhost:8000`

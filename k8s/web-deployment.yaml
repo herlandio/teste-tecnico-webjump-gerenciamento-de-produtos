@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: herlandio7/manager-products:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: APACHE_RUN_USER
+          value: www-data
+        - name: APACHE_RUN_GROUP
+          value: www-data
+        command: ["/bin/bash", "-c", "composer install --no-interaction --prefer-dist --optimize-autoloader && apache2-foreground"]
+        volumeMounts:
+        - name: web-volume
+          mountPath: /var/www/html/manager-products
+      volumes:
+      - name: web-volume
+        hostPath:
+          path: /var/www/html/manager-products
+          type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: web

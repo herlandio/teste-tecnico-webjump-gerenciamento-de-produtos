@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-config
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS products;
+    USE products;
+    CREATE TABLE IF NOT EXISTS `products` (
+      `productID` int NOT NULL AUTO_INCREMENT,
+      `productName` varchar(255) NOT NULL,
+      `productSku` varchar(255) NOT NULL,
+      `productPrice` float NOT NULL,
+      `productDescription` text NOT NULL,
+      `productQuantity` int NOT NULL,
+      `productCategoryOne` varchar(50) DEFAULT NULL,
+      `productCategoryTwo` varchar(50) DEFAULT NULL,
+      `productCategoryThree` varchar(50) DEFAULT NULL,
+      PRIMARY KEY (`productID`)
+    );
+
+    CREATE TABLE IF NOT EXISTS `categories` (
+      `categoryID` int NOT NULL AUTO_INCREMENT,
+      `categoryName` varchar(50) NOT NULL,
+      PRIMARY KEY (`categoryID`)
+    );
