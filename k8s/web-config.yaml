@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+data:
+  APACHE_RUN_USER: "www-data"
+  APACHE_RUN_GROUP: "www-data"
