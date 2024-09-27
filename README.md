@@ -1,8 +1,10 @@
-# Sistema básico de gerenciamento de produtos | categorias
+# [Teste técnico WebJump] Sistema básico de gerenciamento de produtos | categorias
 
 O sistema foi criado com arquitetura MVC, composer para gerenciar dependências, para gerenciar rotas foi utilizado bramus router,
 foi adicionado a cdn bootstrap | font awesome | sweet alert | javascript para o front-end, no back-end foi utilizado PHP puro orientado a objetos
 com banco de dados mysql (PDO e transactions).
+
+OBS: No teste não foi solicitado K8s, docker
 
 - Clone o repositorio
 
