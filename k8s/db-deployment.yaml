@@ -16,8 +16,8 @@ spec:
       - name: mysql
         image: mysql:5.7
         envFrom:
-          - configMapRef:
-              name: db-config
+          - secretRef:
+              name: db-secret
         volumeMounts:
         - name: db-init
           mountPath: /docker-entrypoint-initdb.d

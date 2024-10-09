@@ -26,7 +26,6 @@ spec:
           mountPath: /var/www/html/manager-products
       volumes:
       - name: web-volume
-        hostPath:
-          path: /var/www/html/manager-products
-          type: Directory
+        persistentVolumeClaim:
+          claimName: web-pvc
 
