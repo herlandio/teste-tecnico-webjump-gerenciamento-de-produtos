@@ -1,3 +1,5 @@
+[![ci/cd](https://github.com/herlandio/teste-tecnico-webjump-gerenciamento-de-produtos/actions/workflows/cicd.yml/badge.svg)](https://github.com/herlandio/teste-tecnico-webjump-gerenciamento-de-produtos/actions/workflows/cicd.yml)
+
 # [Teste técnico WebJump] Sistema básico de gerenciamento de produtos | categorias
 
 O sistema foi criado com arquitetura MVC, composer para gerenciar dependências, para gerenciar rotas foi utilizado bramus router,
