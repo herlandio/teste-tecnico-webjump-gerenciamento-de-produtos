@@ -18,6 +18,8 @@ spec:
         ports:
         - containerPort: 8000
         envFrom:
+          - secretRef:
+              name: db-secret
           - configMapRef:
               name: web-config
         command: ["/bin/bash", "-c", "composer install --no-interaction --prefer-dist --optimize-autoloader && apache2-foreground"]
