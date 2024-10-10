@@ -19,7 +19,7 @@ class ModelCategories {
      */
     public function SaveCategories($table, $data) {
         $insert = new Insert();
-        $insert->Insert($table, [
+        $insert->insert($table, [
             "categoryName" => filter_var($data["newcategory"], FILTER_SANITIZE_STRING)
         ]);
     }
@@ -44,7 +44,7 @@ class ModelCategories {
     public function DeleteCategories($table, $id) {
         $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $delete = new Delete();
-        $delete->Delete($table, "WHERE categoryID = {$id}");
+        $delete->delete($table, "WHERE categoryID = {$id}");
     }
 
     /**

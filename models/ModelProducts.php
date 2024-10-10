@@ -19,7 +19,7 @@ class ModelProducts {
      */
     public function ListProducts() {
         $select = new Select();
-        $this->selectResult = $select->Select(
+        $this->selectResult = $select->select(
             "products",
             ["*"],
             null
@@ -59,7 +59,7 @@ class ModelProducts {
     public function UpdateProducts($table, $data) {
         $id = filter_var($data['id'], FILTER_SANITIZE_NUMBER_INT);
         $this->update = new Update();
-        $this->update->Update($table, [
+        $this->update->update($table, [
             "productName" => filter_var($data["name"], FILTER_SANITIZE_STRING),
             "productSku" => filter_var($data["sku"], FILTER_SANITIZE_STRING),
             "productPrice" => filter_var($data["price"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),

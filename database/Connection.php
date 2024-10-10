@@ -17,20 +17,21 @@ class Connection {
     /* The line `private ;` in the PHP class `Connection` is declaring a private property ``
     within the class. This property is used to store the PDO connection object that is established
     when initializing the database connection using PDO in PHP. */
-    private $conn;
+    private ?PDO $conn;
 
     /**
      * The function initializes a database connection using PDO in PHP.
      */
-    public function initDatabase(): void {
-        
+    public function __construct() {
+
         $host   = Config::getHost();
         $port   = Config::getPort();
         $db     = Config::getDatabase();
-
+        $user   = Config::getUser();
+        $pass   = Config::getPassword();
+        
         $this->conn = new PDO(
-            "mysql:host={$host}; port=$port; dbname={$db}",
-            Config::getUser(), Config::getPassword(),
+                "mysql:host={$host}; port=$port; dbname={$db}", $user, $pass,
             [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"]
         );
         
@@ -47,11 +48,9 @@ class Connection {
     }
 
     /**
-     * The function `libertyConnection` in PHP returns a null value for the connection.
-     *
-     * @return null The function `libertyConnection()` is returning `null`.
+     * The function libertyConnection() sets the connection property to null in PHP.
      */
-    public function libertyConection(): null {
-        return $this->conn = null;
+    public function libertyConnection(): void {
+        $this->conn = null;
     }
 }
