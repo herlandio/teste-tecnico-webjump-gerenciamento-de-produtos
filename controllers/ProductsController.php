@@ -24,7 +24,7 @@ class ProductsController {
     public function product(): void {
         $baseView = new BaseView();
         $baseView->setTitle('Adicionar Produtos');
-        $baseView->Folder('Product/');
+        $baseView->folder('Product/');
     }
 
     /**
