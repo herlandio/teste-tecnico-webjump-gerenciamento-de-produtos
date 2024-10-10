@@ -43,7 +43,7 @@
 
                         <?php
 
-                        foreach ((new \Controllers\CategoriesController())->ListCategories() as $category) {
+                        foreach ((new \Controllers\CategoriesController())->listCategories() as $category) {
                             echo "<option value=\"{$category['categoryName']}\">{$category['categoryName']}</option>";
                         }
                         ?>

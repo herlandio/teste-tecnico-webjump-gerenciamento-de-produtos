@@ -48,7 +48,7 @@
                                         </thead>
                                         <tbody class="text-center">
                                             <?php
-                                                foreach ((new \Controllers\CategoriesController())->ListCategories() as $category) {
+                                                foreach ((new \Controllers\CategoriesController())->listCategories() as $category) {
                                                     echo "
                                                         <tr>
                                                             <th>{$category['categoryName']}</th>
@@ -97,7 +97,7 @@
                     <tbody class="text-center">
                     <?php
 
-                        foreach ((new \Controllers\ProductsController())->ListProducts() as $item) {
+                        foreach ((new \Controllers\ProductsController())->listProducts() as $item) {
                             echo "
                                 <tr>
                                     <th scope=\"row\">{$item['productName']}</th>
@@ -151,7 +151,7 @@
                                                         <div class=\"form-group\">
                                                             <label for=\"quantity\">Quantidade</label>
                                                             <input type=\"number\" class=\"form-control quantity\" name='quantity' value='{$item['productQuantity']}' aria-describedby=\"quantity\">
-                                                        </div>                                                    
+                                                        </div>
                                                     </div>
                                                     
                                                     <div class=\"modal-footer\">

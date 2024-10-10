@@ -17,21 +17,24 @@ class ModelProducts {
     /**
      * List products
      */
-    public function ListProducts() {
+    public function listProducts(): array {
         $select = new Select();
         $this->selectResult = $select->select(
             "products",
             ["*"],
             null
         );
+        
+        return $this->selectResult;
     }
 
     /**
      * Create products
-     * @param $table
-     * @param $data
+     *
+     * @param string $table
+     * @param array $data
      */
-    public function SaveProducts($table, $data) {
+    public function saveProducts(string $table, array $data): void {
         $insert = new Insert();
         $insert->Insert($table, [
             "productName" => filter_var($data["name"], FILTER_SANITIZE_STRING),
@@ -53,10 +56,11 @@ class ModelProducts {
 
     /**
      * Update products
-     * @param $table
-     * @param $data
+     *
+     * @param string $table
+     * @param array $data
      */
-    public function UpdateProducts($table, $data) {
+    public function updateProducts(string $table, array $data): void {
         $id = filter_var($data['id'], FILTER_SANITIZE_NUMBER_INT);
         $this->update = new Update();
         $this->update->update($table, [
@@ -70,26 +74,31 @@ class ModelProducts {
 
     /**
      * Delete Products
-     * @param $table
-     * @param $id
+     *
+     * @param string $table
+     * @param int $id
      */
-    public function DeleteProduct($table, $id) {
+    public function deleteProduct(string $table, int $id): void {
         $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $delete = new Delete();
         $delete->Delete($table, "WHERE productID = {$id}");
     }
 
     /**
-     * @return mixed
+     * Return results
+     *
+     * @return array
      */
-
-    public function getSelect() { return $this->selectResult; }
+    public function getSelect(): array {
+        return $this->selectResult;
+    }
 
     /**
      * @return Update
      */
 
-    public function getUpdate() { return $this->update; }
-
+    public function getUpdate(): Update {
+        return $this->update;
+    }
 
 }

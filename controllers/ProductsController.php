@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controllers;
 
 use Help\BaseView;
@@ -8,8 +10,8 @@ use Models\ModelProducts;
 
 class ProductsController {
 
-    private $database;
-    private $post;
+    private ModelProducts $database;
+    private array $post;
 
     public function __construct() {
         $this->post = $_POST;
@@ -19,84 +21,108 @@ class ProductsController {
     /**
      * Define a view
      */
-    public function Product() {
+    public function product(): void {
         $baseView = new BaseView();
-        /**
-         * Set title for page
-         */
         $baseView->setTitle('Adicionar Produtos');
-
-        /**
-         * Set folder of view
-         */
         $baseView->Folder('Product/');
     }
 
     /**
      * Create Products
      */
-    public function Save() {
+    public function save(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            if (isset($this->post)) {
-                if (
-                    !empty($this->post["category"][0]) &&
-                    !empty($this->post["name"]) &&
-                    !empty($this->post["sku"]) &&
-                    !empty($this->post["price"]) &&
-                    !empty($this->post["description"]) &&
-                    !empty($this->post["quantity"])
-                ) {
-                    $this->database->SaveProducts('products', $this->post);
-                    echo (new Help())->JSON(true, "created", 201);
-                } else {
-                    echo (new Help())->JSON(false, "fail", 403);
+            if (
+                !empty($this->post["category"][0]) &&
+                !empty($this->post["name"]) &&
+                !empty($this->post["sku"]) &&
+                !empty($this->post["price"]) &&
+                !empty($this->post["description"]) &&
+                !empty($this->post["quantity"])
+            ) {
+                try {
+                    $this->database->saveProducts('products', $this->post);
+                    echo (new Help())->JSON(true, "Produto criado com sucesso.", 201);
+                } catch (\Exception $e) {
+                    echo json_encode([
+                        "success" => false,
+                        "message" => "Erro ao salvar produto: " . $e->getMessage(),
+                        "code" => $e->getCode()
+                    ]);
                 }
+            } else {
+                echo (new Help())->JSON(false, "Preencha todos os campos obrigatórios.", 403);
             }
         }
     }
+    
 
     /**
      * Update Products
      */
-    public function Update() {
+    public function update(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            if (isset($this->post)) {
-                if (
-                    !empty($this->post["name"]) &&
-                    !empty($this->post["sku"]) &&
-                    !empty($this->post["price"]) &&
-                    !empty($this->post["description"]) &&
-                    !empty($this->post["quantity"])
-                ) {
-                    $this->database->UpdateProducts('products', $this->post);
-                    echo (new Help())->JSON(true, "updated", 204);
-                } else {
-                    echo (new Help())->JSON(false, "fail", 403);
+            if (
+                !empty($this->post["name"]) &&
+                !empty($this->post["sku"]) &&
+                !empty($this->post["price"]) &&
+                !empty($this->post["description"]) &&
+                !empty($this->post["quantity"])
+            ) {
+                try {
+                    $this->database->updateProducts('products', $this->post);
+                    echo (new Help())->JSON(true, "Produto atualizado com sucesso.", 200);
+                } catch (\Exception $e) {
+                    echo json_encode([
+                        "success" => false,
+                        "message" => "Erro ao atualizar produto: " . $e->getMessage(),
+                        "code" => $e->getCode()
+                    ]);
                 }
+            } else {
+                echo (new Help())->JSON(false, "Preencha todos os campos obrigatórios.", 403);
             }
         }
     }
 
     /**
      * Delete Products
-     * @param $id
+     * @param int $id
      */
-    public function Delete($id) {
+    public function delete(int $id): void {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
-            $this->database->DeleteProduct("products", $id);
-            header("Location: /");
+            try {
+                $this->database->deleteProduct("products", $id);
+                header("Location: /");
+            } catch (\Exception $e) {
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Erro ao excluir produto: " . $e->getMessage(),
+                    "code" => $e->getCode()
+                ]);
+            }
         }
     }
 
     /**
      * List products
      */
-    public function ListProducts() {
+    public function listProducts(): array {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
-            $products = new ModelProducts();
-            $products->ListProducts();
-            return $products->getSelect();
+            try {
+                $products = new ModelProducts();
+                $products->listProducts();
+                return $products->getSelect();
+            } catch (\Exception $e) {
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Erro ao listar produtos: " . $e->getMessage(),
+                    "code" => $e->getCode()
+                ]);
+                return [];
+            }
         }
+        return [];
     }
 
 }

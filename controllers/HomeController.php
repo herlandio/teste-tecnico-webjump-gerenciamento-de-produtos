@@ -1,7 +1,8 @@
 <?php
 
-namespace Controllers;
+declare(strict_types=1);
 
+namespace Controllers;
 
 use Help\BaseView;
 
@@ -10,18 +11,9 @@ class HomeController {
     /**
      * Define the view
      */
-    public function Home() {
-
+    public function home(): void {
         $baseView = new BaseView();
-
-        /**
-         * Set title for page
-         */
         $baseView->setTitle('Lista de Produtos');
-
-        /**
-         * Set folder of view
-         */
         $baseView->Folder('Home/');
     }
 
