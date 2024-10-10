@@ -11,63 +11,57 @@ methods for retrieving configuration values related to a MySQL database connecti
 abstract class Config {
 
     /**
-     * The function `getHost` returns the value of the environment variable `MYSQL_DB_HOST` as an
-     * array, boolean, or string.
+     * The function `getHost` returns the value of the environment variable `MYSQL_DB_HOST` as a
+     * string.
      *
-     * @return array|bool|string The `getHost()` function is returning the value of the environment
-     * variable `MYSQL_DB_HOST`. The return type of the function is specified as `array|bool|string`,
-     * indicating that the return value could be an array, a boolean, or a string.
+     * @return string The `MYSQL_DB_HOST` environment variable value is being returned as a string by
+     * the `getHost` function.
      */
-    public static function getHost(): array|bool|string {
+    public static function getHost(): string {
         return getenv('MYSQL_DB_HOST');
     }
 
     /**
-     * The function returns the value of the environment variable MYSQL_DB_USER as an array, boolean,
-     * or string.
+     * The function `getUser` returns the value of the environment variable `MYSQL_DB_USER` as a
+     * string.
      *
-     * @return array|bool|string the value of the environment variable 'MYSQL_DB_USER'. It can return
-     * an array, boolean, or string depending on the value of the environment variable.
+     * @return string The function `getUser()` is returning the value of the environment variable
+     * `MYSQL_DB_USER`.
      */
-    public static function getUser(): array|bool|string {
+    public static function getUser(): string {
         return getenv('MYSQL_DB_USER');
     }
 
     /**
-     * The function `getPassword` returns the MySQL root password stored in the environment variable or
-     * a boolean or string value.
+     * The function `getPassword` returns the MySQL root password stored in the environment variable
+     * `MYSQL_ROOT_PASSWORD`.
      *
-     * @return array|bool|string The `getPassword()` function is returning the value of the environment
-     * variable `MYSQL_ROOT_PASSWORD`. This value can be of type array, boolean, or string depending on
-     * what is stored in the environment variable.
+     * @return string The `MYSQL_ROOT_PASSWORD` environment variable is being returned as a string.
      */
-    public static function getPassword(): array|bool|string {
+    public static function getPassword(): string {
         return getenv('MYSQL_ROOT_PASSWORD');
     }
 
     /**
-     * The function `getDatabase` returns the value of the environment variable `MYSQL_DATABASE` as an
-     * array, boolean, or string.
+     * The function `getDatabase` returns the value of the environment variable `MYSQL_DATABASE` as a
+     * string in PHP.
      *
-     * @return array|bool|string The function `getDatabase()` is returning the value of the environment
-     * variable `MYSQL_DATABASE`. The return type of the function is either an array, a boolean, or a
-     * string, depending on the value of the environment variable.
+     * @return string The function `getDatabase()` is returning the value of the environment variable
+     * `MYSQL_DATABASE`.
      */
-    public static function getDatabase(): array|bool|string {
+    public static function getDatabase(): string {
         return getenv('MYSQL_DATABASE');
     }
 
     /**
-     * The function `getPort` returns the value of the environment variable `MYSQL_DB_PORT` as an
-     * array, boolean, or string.
+     * The function `getPort` returns the MySQL database port from the environment variable
+     * `MYSQL_DB_PORT` as a string.
      *
-     * @return array|bool|string The `getPort()` function is returning the value of the environment
-     * variable `MYSQL_DB_PORT`. The return type of the function is specified as an array, boolean, or
-     * string.
+     * @return string The `getPort` function is returning the value of the environment variable
+     * `MYSQL_DB_PORT` as a string.
      */
-    public static function getPort(): array|bool|string {
+    public static function getPort(): string {
         return getenv('MYSQL_DB_PORT');
     }
 
 }
-
