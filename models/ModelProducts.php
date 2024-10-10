@@ -11,8 +11,8 @@ use Database\Update;
 
 class ModelProducts {
 
-    private $update;
-    private $selectResult;
+    private Update $update;
+    private array $selectResult;
 
     /**
      * List products
@@ -24,7 +24,7 @@ class ModelProducts {
             ["*"],
             null
         );
-        
+
         return $this->selectResult;
     }
 
