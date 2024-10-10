@@ -4,5 +4,10 @@ metadata:
   name: db-secret
 type: Opaque
 data:
+  MYSQL_DB_HOST: db-service
+  MYSQL_DB_PORT: "3306"
+  MYSQL_DB_USER: root
   MYSQL_ROOT_PASSWORD: cm9vdA==
   MYSQL_DATABASE: cHJvZHVjdHM=
+
+
