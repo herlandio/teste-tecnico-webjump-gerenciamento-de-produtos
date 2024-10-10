@@ -17,10 +17,4 @@ git clone https://github.com/herlandio/gerenciamento-de-produtos.git
 - Basta executar: `kubectl apply -f k8s/` para subir a aplicação.
 
 - Para rodar a aplicação deverá ter o docker e k8s habilitado!
-- Para executar a aplicação digite:
-
-```
-kubectl port-forward svc/web-service 8000:80
-```
-
-- Acesse a aplicação em `http://localhost:8000`
+- Acesse a aplicação em `http://localhost`
