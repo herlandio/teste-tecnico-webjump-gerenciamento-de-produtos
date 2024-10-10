@@ -1,22 +1,21 @@
 <?php
 
-declare(strict_types=1);
 
 namespace Help;
 
+
 class BaseView {
 
-    private string $title;
-    private string $header;
-    private string $body;
-    private string $footer;
+    private $title;
+    private $header;
+    private $body;
+    private $footer;
 
     /**
      * Show templates of view
-     *
      * @param $folder
      */
-    public function folder(string $folder): void {
+    public function Folder($folder) {
         require __DIR__.'../../views/index.php';
         $this->setHeader(require(__DIR__.'../../views/'.$folder.'header.php'));
         $this->setBody(require(__DIR__.'../../views/'.$folder.'body.php'));
@@ -24,81 +23,65 @@ class BaseView {
     }
 
     /**
-     * Set title page
-     *
-     * @param string $title
+     * @param mixed $title
      */
-    public function setTitle(string $title): void
+    public function setTitle($title)
     {
         $this->title = $title;
     }
 
     /**
-     * Get title page
-     *
-     * @return string
+     * @return mixed
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
 
     /**
-     * Set header page
-     *
-     * @param string $header
+     * @param mixed $header
      */
-    public function setHeader(string $header): void
+    public function setHeader($header)
     {
         $this->header = $header;
     }
 
     /**
-     * Set body page
-     *
-     * @param string $body
+     * @param mixed $body
      */
-    public function setBody(string $body): void
+    public function setBody($body)
     {
         $this->body = $body;
     }
 
     /**
-     * Set footer page
-     *
-     * @param string $footer
+     * @param mixed $footer
      */
-    public function setFooter(string $footer): void
+    public function setFooter($footer)
     {
         $this->footer = $footer;
     }
 
     /**
-     * Get header page
-     *
-     * @return string
+     * @return mixed
      */
-    public function getHeader(): string
+    public function getHeader()
     {
         return $this->header;
     }
 
     /**
-     * Set body page
-     *
-     * @return string
+     * @return mixed
      */
-    public function getBody(): string
+    public function getBody()
     {
         return $this->body;
     }
 
     /**
-     * Set footer page
-     *
-     * @return string
+     * @return mixed
      */
-    public function getFooter(): string
+    public function getFooter()
     {
         return $this->footer;
     }

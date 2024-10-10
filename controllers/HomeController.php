@@ -14,7 +14,7 @@ class HomeController {
     public function home(): void {
         $baseView = new BaseView();
         $baseView->setTitle('Lista de Produtos');
-        $baseView->folder('Home/');
+        $baseView->Folder('Home/');
     }
 
 }
