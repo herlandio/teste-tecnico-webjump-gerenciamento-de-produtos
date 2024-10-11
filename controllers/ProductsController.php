@@ -24,7 +24,7 @@ class ProductsController {
     public function product(): void {
         $baseView = new BaseView();
         $baseView->setTitle('Adicionar Produtos');
-        $baseView->Folder('Product/');
+        $baseView->folder('Product/');
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductsController {
             ) {
                 try {
                     $this->database->saveProducts('products', $this->post);
-                    echo (new Help())->JSON(true, "Produto criado com sucesso.", 201);
+                    echo (new Help())->json(true, "Produto criado com sucesso.", 201);
                 } catch (\Exception $e) {
                     echo json_encode([
                         "success" => false,
@@ -51,7 +51,7 @@ class ProductsController {
                     ]);
                 }
             } else {
-                echo (new Help())->JSON(false, "Preencha todos os campos obrigatórios.", 403);
+                echo (new Help())->json(false, "Preencha todos os campos obrigatórios.", 403);
             }
         }
     }
@@ -71,7 +71,7 @@ class ProductsController {
             ) {
                 try {
                     $this->database->updateProducts('products', $this->post);
-                    echo (new Help())->JSON(true, "Produto atualizado com sucesso.", 200);
+                    echo (new Help())->json(true, "Produto atualizado com sucesso.", 200);
                 } catch (\Exception $e) {
                     echo json_encode([
                         "success" => false,
@@ -80,7 +80,7 @@ class ProductsController {
                     ]);
                 }
             } else {
-                echo (new Help())->JSON(false, "Preencha todos os campos obrigatórios.", 403);
+                echo (new Help())->json(false, "Preencha todos os campos obrigatórios.", 403);
             }
         }
     }

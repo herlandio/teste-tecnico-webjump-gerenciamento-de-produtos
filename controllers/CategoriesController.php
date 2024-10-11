@@ -24,26 +24,26 @@ class CategoriesController {
     }
 
     /**
-     * The function `saveCategories` in PHP saves new categories to the database and returns a JSON
+     * The function `saveCategories` in PHP saves new categories to the database and returns a json
      * response based on the outcome.
      *
      * @return void If the `["REQUEST_METHOD"]` is "POST" and the condition for
      * `empty(->post["newcategory"]) && !isset(->post["newcategory"])` is met, then the
-     * method will return a JSON response with a status of "fail" and a HTTP status code of 403.
+     * method will return a json response with a status of "fail" and a HTTP status code of 403.
      */
     public function saveCategories(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             
             if (empty($_POST["newcategory"]) && !isset($_POST["newcategory"])) {
-                echo (new Help())->JSON(false, "fail", 403);
+                echo (new Help())->json(false, "fail", 403);
                 return;
             }
             
             try {
                 $this->database->saveCategories('categories', $_POST);
-                echo (new Help())->JSON(true, "created", 201);
+                echo (new Help())->json(true, "created", 201);
             } catch (\Throwable $th) {
-                echo (new Help())->JSON(false, $th->getMessage(), 500);
+                echo (new Help())->json(false, $th->getMessage(), 500);
             }
             
         }
@@ -56,7 +56,7 @@ class CategoriesController {
      * @return array If the `["REQUEST_METHOD"]` is "GET", the function will attempt to list
      * categories from the database using `->database->ListCategories()` method. If successful, it
      * will return the result of `->database->getSelect()`, which is an array of categories. If an
-     * exception is caught during the process, it will return an empty array and echo a JSON-encoded
+     * exception is caught during the process, it will return an empty array and echo a json-encoded
      */
     public function listCategories(): array {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {

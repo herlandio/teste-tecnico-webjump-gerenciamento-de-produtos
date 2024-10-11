@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Help;
-
 
 class Help {
 
     /**
-     * Return messages of success or fail
-     * @param $status
-     * @param $message
-     * @param $code
-     * @return false|string
+     * Return messages of success or fail as a JSON string
+     *
+     * @param bool $status The status of the operation (true for success, false for failure)
+     * @param string $message The message to return
+     * @param int $code The status code associated with the message
+     * @return string JSON encoded response
      */
-    public function JSON($status, $message, $code) {
+    public function json(bool $status, string $message, int $code): string {
         return json_encode(
             [
                 "data" => $status,
@@ -22,5 +23,4 @@ class Help {
             ]
         );
     }
-
 }

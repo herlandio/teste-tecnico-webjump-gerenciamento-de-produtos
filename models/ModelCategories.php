@@ -14,6 +14,7 @@ class ModelCategories {
 
     /**
      * Create categories
+     *
      * @param string $table
      * @param array $data
      */
@@ -39,6 +40,7 @@ class ModelCategories {
 
     /**
      * Delete categories
+     *
      * @param string $table
      * @param int $id
      */

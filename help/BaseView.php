@@ -1,89 +1,109 @@
 <?php
 
-
 namespace Help;
-
 
 class BaseView {
 
-    private $title;
-    private $header;
-    private $body;
-    private $footer;
+    private const VIEWS_DIR = __DIR__ . '../../views/';
 
-    /**
-     * Show templates of view
-     * @param $folder
-     */
-    public function Folder($folder) {
-        require __DIR__.'../../views/index.php';
-        $this->setHeader(require(__DIR__.'../../views/'.$folder.'header.php'));
-        $this->setBody(require(__DIR__.'../../views/'.$folder.'body.php'));
-        $this->setFooter(require(__DIR__.'../../views/'.$folder.'footer.php'));
+    private string $title;
+    private string $header;
+    private string $body;
+    private string $footer;
+
+    public function __construct() {
+        $this->title    = '';
+        $this->header   = '';
+        $this->body     = '';
+        $this->footer   = '';
     }
 
     /**
-     * @param mixed $title
+     * Show templates of view
+     *
+     * @param string $folder The folder containing the view templates
+     * @return void
      */
-    public function setTitle($title)
-    {
+    public function folder(string $folder): void {
+        require self::VIEWS_DIR . 'index.php';
+        $this->setHeader(require self::VIEWS_DIR . $folder . 'header.php');
+        $this->setBody(require self::VIEWS_DIR . $folder . 'body.php');
+        $this->setFooter(require self::VIEWS_DIR . $folder . 'footer.php');
+    }
+
+    /**
+     * Set the title of the view
+     *
+     * @param string $title The title to set
+     * @return void
+     */
+    public function setTitle(string $title): void {
         $this->title = $title;
     }
 
     /**
-     * @return mixed
+     * Get the title of the view
+     *
+     * @return string The title of the view
      */
-    public function getTitle()
-    {
+    public function getTitle(): string {
         return $this->title;
     }
 
     /**
-     * @param mixed $header
+     * Set the header content of the view
+     *
+     * @param string $header The header content to set
+     * @return void
      */
-    public function setHeader($header)
-    {
+    public function setHeader(string $header): void {
         $this->header = $header;
     }
 
     /**
-     * @param mixed $body
+     * Set the body content of the view
+     *
+     * @param string $body The body content to set
+     * @return void
      */
-    public function setBody($body)
-    {
+    public function setBody(string $body): void {
         $this->body = $body;
     }
 
     /**
-     * @param mixed $footer
+     * Set the footer content of the view
+     *
+     * @param string $footer The footer content to set
+     * @return void
      */
-    public function setFooter($footer)
-    {
+    public function setFooter(string $footer): void {
         $this->footer = $footer;
     }
 
     /**
-     * @return mixed
+     * Get the header content of the view
+     *
+     * @return string The header content of the view
      */
-    public function getHeader()
-    {
+    public function getHeader(): string {
         return $this->header;
     }
 
     /**
-     * @return mixed
+     * Get the body content of the view
+     *
+     * @return string The body content of the view
      */
-    public function getBody()
-    {
+    public function getBody(): string {
         return $this->body;
     }
 
     /**
-     * @return mixed
+     * Get the footer content of the view
+     *
+     * @return string The footer content of the view
      */
-    public function getFooter()
-    {
+    public function getFooter(): string {
         return $this->footer;
     }
-
 }
