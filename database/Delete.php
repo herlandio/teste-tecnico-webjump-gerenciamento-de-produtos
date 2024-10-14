@@ -32,11 +32,11 @@ class Delete {
      * table from which you want to delete records. It is a required parameter and should be a string
      * value specifying the table name. For example, if you want to delete records from a table named
      * 'users', you would pass
-     * @param ?string where The `where` parameter in the `delete` function is used to specify the condition for
+     * @param string where The `where` parameter in the `delete` function is used to specify the condition for
      * deleting records from the database table. It allows you to pass a custom WHERE clause to filter
      * the rows that should be deleted.
      */
-    public function delete(string $table, ?string $where = '') {
+    public function delete(string $table, string $where = ''): void {
 
         if (empty($where)) {
             throw new \InvalidArgumentException("A cláusula WHERE é obrigatória para deletar registros.");
@@ -46,7 +46,7 @@ class Delete {
 
         try {
 
-            $this->connection->getConn()->exec("DELETE FROM {$table} {$where}");
+            $this->connection->getConn()->exec("DELETE FROM {$table} WHERE {$where}");
             $this->connection->getConn()->commit();
 
         } catch (PDOException $e) {
@@ -54,10 +54,10 @@ class Delete {
             $this->connection->getConn()->rollBack();
 
             echo json_encode([
-                "File" => $e->getFile(),
-                "Line" => $e->getLine(),
-                "Message" => $e->getMessage(),
-                "CodeError" => $e->getCode()
+                "File"          => $e->getFile(),
+                "Line"          => $e->getLine(),
+                "Message"       => $e->getMessage(),
+                "CodeError"     => $e->getCode()
             ]);
 
         } finally {

@@ -5,71 +5,72 @@ declare(strict_types=1);
 namespace Controllers;
 
 use Help\Help;
-use Models\ModelCategories;
+use Models\Category;
+use Services\CategoriesService;
 
+/**
+ * Class CategoriesController
+ *
+ * This controller handles category-related operations such as creating, listing, and deleting categories.
+ */
 class CategoriesController {
 
-    /* The line `private ModelCategories ;` in the `CategoriesController` class is declaring a
-    private property named `` of type `ModelCategories`. This property is used to store an
-    instance of the `ModelCategories` class, which presumably handles interactions with the database
-    related to categories. */
-    private ModelCategories $database;
-    
     /**
-     * The above function is a PHP constructor that initializes a new instance of the ModelCategories
-     * class.
+     * @var CategoriesService $service The service responsible for category operations.
+     */
+    private CategoriesService $service;
+
+    /**
+     * CategoriesController constructor.
+     * Initializes the service to manage categories.
      */
     public function __construct() {
-        $this->database = new ModelCategories();
+        $this->service = new CategoriesService();
     }
 
     /**
-     * The function `saveCategories` in PHP saves new categories to the database and returns a json
-     * response based on the outcome.
+     * Create a new category.
+     * Handles the POST request to create a category.
      *
-     * @return void If the `["REQUEST_METHOD"]` is "POST" and the condition for
-     * `empty(->post["newcategory"]) && !isset(->post["newcategory"])` is met, then the
-     * method will return a json response with a status of "fail" and a HTTP status code of 403.
+     * @return void
      */
     public function saveCategories(): void {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            
-            if (empty($_POST["newcategory"]) && !isset($_POST["newcategory"])) {
-                echo (new Help())->json(false, "fail", 403);
-                return;
-            }
-            
             try {
-                $this->database->saveCategories('categories', $_POST);
+                $this->service->createCategory($_POST["newcategory"]);
                 echo (new Help())->json(true, "created", 201);
-            } catch (\Throwable $th) {
-                echo (new Help())->json(false, $th->getMessage(), 500);
+            } catch (\InvalidArgumentException $e) {
+                echo (new Help())->json(false, $e->getMessage(), 403);
+            } catch (\Exception $e) {
+                echo (new Help())->json(false, $e->getMessage(), 500);
             }
-            
         }
     }
 
     /**
-     * This PHP function lists categories from a database and returns them as an array, handling
-     * exceptions if they occur.
+     * List all categories.
+     * Handles the GET request to retrieve a list of categories.
      *
-     * @return array If the `["REQUEST_METHOD"]` is "GET", the function will attempt to list
-     * categories from the database using `->database->ListCategories()` method. If successful, it
-     * will return the result of `->database->getSelect()`, which is an array of categories. If an
-     * exception is caught during the process, it will return an empty array and echo a json-encoded
+     * @return array An array of categories with categoryID and categoryName.
      */
     public function listCategories(): array {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             try {
-                $this->database->listCategories();
-                return $this->database->getSelect();
+                $categories = $this->service->listCategories();
+                
+                return array_map(function(Category $category) {
+                    return [
+                        'categoryID' => $category->getCategoryID(),
+                        'categoryName' => $category->getCategoryName()
+                    ];
+                }, $categories);
+
             } catch (\Exception $e) {
                 echo json_encode([
                     "success" => false,
                     "message" => "Erro ao listar categorias: " . $e->getMessage(),
                     "code" => $e->getCode()
                 ]);
-
                 return [];
             }
         }
@@ -77,15 +78,16 @@ class CategoriesController {
     }
 
     /**
-     * Delete categories by id
+     * Delete a category by ID.
+     * Handles the GET request to delete a category based on its ID.
      *
-     * @param int $id
+     * @param int $id The ID of the category to be deleted.
      * @return void
      */
     public function delete(int $id): void {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             try {
-                $this->database->deleteCategories("categories", $id);
+                $this->service->deleteCategory($id);
                 header("Location: /");
                 exit();
             } catch (\Exception $e) {
@@ -98,3 +100,4 @@ class CategoriesController {
         }
     }
 }
+

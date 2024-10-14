@@ -100,25 +100,25 @@
                         foreach ((new \Controllers\ProductsController())->listProducts() as $item) {
                             echo "
                                 <tr>
-                                    <th scope=\"row\">{$item['productName']}</th>
-                                    <td>{$item['productSku']}</td>
-                                    <td>{$item['productPrice']}</td>
-                                    <td>{$item['productDescription']}</td>
-                                    <td>{$item['productQuantity']}</td>
-                                    <td>{$item['productCategoryOne']} <br /> {$item['productCategoryTwo']} <br /> {$item['productCategoryThree']}</td>
+                                    <th scope=\"row\">{$item['name']}</th>
+                                    <td>{$item['sku']}</td>
+                                    <td>{$item['price']}</td>
+                                    <td>{$item['description']}</td>
+                                    <td>{$item['quantity']}</td>
+                                    <td>{$item['categoryOne']} <br /> {$item['categoryTwo']} <br /> {$item['categoryThree']}</td>
                                     <td>
                                         
-                                        <button class='btn btn-dark btn-sm' data-toggle=\"modal\" data-target=\"#product{$item['productID']}\">
+                                        <button class='btn btn-dark btn-sm' data-toggle=\"modal\" data-target=\"#product{$item['id']}\">
                                             <i class=\"fa-solid fa-eye\"></i>
                                         </button>
                                         
-                                        <a href='/products/delete/{$item["productID"]}' class='btn btn-danger btn-sm'>
+                                        <a href='/products/delete/{$item["id"]}' class='btn btn-danger btn-sm'>
                                             <i class=\"fa-solid fa-trash\"></i>
                                         </a>
 
                                         <!-- start modal products -->
 
-                                        <div class=\"modal fade\" id=\"product{$item['productID']}\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"productModalLabel\" aria-hidden=\"true\">
+                                        <div class=\"modal fade\" id=\"product{$item['id']}\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"productModalLabel\" aria-hidden=\"true\">
                                             <div class=\"modal-dialog\" role=\"document\">
                                             <div class=\"modal-content\">
                                                 <form action=\"/products/update\" method=\"post\" enctype=\"multipart/form-data\" >
@@ -131,26 +131,26 @@
                                                     </div>
                                                     
                                                     <div class=\"modal-body text-left\">
-                                                        <input type=\"hidden\" name=\"id\" class='id' value=\"{$item['productID']}\">
+                                                        <input type=\"hidden\" name=\"id\" class='id' value=\"{$item['id']}\">
                                                         <div class=\"form-group\">
                                                             <label for=\"name\">Produto</label>
-                                                            <input type=\"text\" class=\"form-control name\" name='name' value='{$item['productName']}' aria-describedby=\"name\">
+                                                            <input type=\"text\" class=\"form-control name\" name='name' value='{$item['name']}' aria-describedby=\"name\">
                                                         </div>
                                                         <div class=\"form-group\">
                                                             <label for=\"sku\">SKU</label>
-                                                            <input type=\"text\" class=\"form-control sku\" name='sku' value='{$item['productSku']}' aria-describedby=\"sku\">
+                                                            <input type=\"text\" class=\"form-control sku\" name='sku' value='{$item['sku']}' aria-describedby=\"sku\">
                                                         </div>
                                                         <div class=\"form-group\">
                                                             <label for=\"price\">Preço</label>
-                                                            <input type=\"text\" class=\"form-control price\" name='price' value='{$item['productPrice']}' aria-describedby=\"price\">
+                                                            <input type=\"text\" class=\"form-control price\" name='price' value='{$item['price']}' aria-describedby=\"price\">
                                                         </div>
                                                         <div class=\"form-group\">
                                                             <label for=\"description\">Descrição</label>
-                                                            <input type=\"text\" class=\"form-control description\" name='description' value='{$item['productDescription']}' aria-describedby=\"description\">
+                                                            <input type=\"text\" class=\"form-control description\" name='description' value='{$item['description']}' aria-describedby=\"description\">
                                                         </div>
                                                         <div class=\"form-group\">
                                                             <label for=\"quantity\">Quantidade</label>
-                                                            <input type=\"number\" class=\"form-control quantity\" name='quantity' value='{$item['productQuantity']}' aria-describedby=\"quantity\">
+                                                            <input type=\"number\" class=\"form-control quantity\" name='quantity' value='{$item['quantity']}' aria-describedby=\"quantity\">
                                                         </div>
                                                     </div>
                                                     

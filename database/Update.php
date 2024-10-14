@@ -49,12 +49,12 @@ class Update {
      * @param array campos The `campos` parameter in the `update` function represents an associative
      * array where the keys are the column names and the values are the new values that you want to
      * update in those columns.
-     * @param ?string where The `` parameter in the `update` function is used to specify the condition
+     * @param string where The `` parameter in the `update` function is used to specify the condition
      * for updating the records in the database table. It is a string that represents the WHERE clause
      * of the SQL query. This clause is used to filter the rows that need to be updated based on
      * certain conditions.
      */
-    public function update(string $table, array $campos, ?string $where): void {
+    public function update(string $table, array $campos, string $where): void {
 
         if (empty($where)) {
             throw new \InvalidArgumentException("A cláusula WHERE é obrigatória para atualizar registros.");
@@ -70,7 +70,7 @@ class Update {
     
         try {
 
-            $statement = $this->connection->getConn()->prepare("UPDATE {$table} SET {$this->data} {$where}");
+            $statement = $this->connection->getConn()->prepare("UPDATE {$table} SET {$this->data} WHERE {$where}");
             $values = array_values($campos);
             $statement->execute($values);
             $this->rowCount = $statement->rowCount();

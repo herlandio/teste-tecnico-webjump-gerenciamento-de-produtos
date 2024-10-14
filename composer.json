@@ -8,7 +8,9 @@
             "Database\\": "database",
             "Help\\": "help",
             "Models\\": "models",
-            "Views\\": "views"
+            "Views\\": "views",
+            "Repositories\\": "repositories",
+            "Services\\": "services"
         }
     },
     "authors": [
