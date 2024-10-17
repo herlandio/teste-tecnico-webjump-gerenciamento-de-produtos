@@ -28,11 +28,15 @@ abstract class Config {
         }
 
         try {
-            $cluster = KubernetesCluster::fromKubeConfigVariable($kubeConfigContent);
-            $client = $cluster->client();
+            $cluster = KubernetesCluster::fromKubeConfigVariable($kubeConfigContent); // Método correto
+            
+            $client = $cluster->getSecretByName('db-secret');
 
-            $secret = $client->secrets()->inNamespace('default')->get('db-secret');
-            self::$secret = $secret->getData();
+            if ($client === null) {
+                throw new \RuntimeException('Kubernetes client could not be created.');
+            }
+
+            self::$secret = $client->getData();
 
             if (empty(self::$secret)) {
                 throw new \RuntimeException('Failed to retrieve Kubernetes secret data.');
