@@ -23,6 +23,8 @@ class Connection {
      * The function initializes a database connection using PDO in PHP.
      */
     public function __construct() {
+        
+        Config::initialize();
 
         $host   = Config::getHost();
         $port   = Config::getPort();
