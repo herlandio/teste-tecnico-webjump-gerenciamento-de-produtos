@@ -18,5 +18,7 @@ RUN apt-get update \
                 Header set Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization"\n\
             </IfModule>\n'\
     >> /etc/apache2/conf-enabled/cors.conf
-    
+
+RUN composer update
+
 EXPOSE 8000
