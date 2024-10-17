@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Config;
 
-use Kubernetes\Client;
-use Kubernetes\ClientConfig;
+use RenokiCo\PhpK8s\KubernetesCluster;
+use RenokiCo\PhpK8s\Exceptions\KubernetesException;
 
 /* The `abstract class Config` is defining a base class named `Config` that cannot be instantiated on
 its own but can be extended by other classes. This class serves as a blueprint for other classes to
@@ -13,15 +13,32 @@ inherit common properties and methods. In this specific case, the `Config` class
 methods for retrieving configuration values related to a MySQL database connection. */
 abstract class Config {
 
-    private static array $secret;
+    private static array $secret = [];
 
     public static function initialize(): void {
-        $config = ClientConfig::fromKubeConfig('~/.kube/config');
-        $client = new Client($config);
-        self::$secret = $client->getSecret('db-secret', 'default');
+        $kubeConfigPath = __DIR__ . '/../k8s/db-config.yaml';
 
-        if (self::$secret === null) {
-            throw new \RuntimeException('Failed to retrieve Kubernetes secret.');
+        if (!file_exists($kubeConfigPath)) {
+            throw new \RuntimeException('Kube config file not found at: ' . $kubeConfigPath);
+        }
+
+        $kubeConfigContent = file_get_contents($kubeConfigPath);
+        if ($kubeConfigContent === false) {
+            throw new \RuntimeException('Failed to read kube config file.');
+        }
+
+        try {
+            $cluster = KubernetesCluster::fromKubeConfigVariable($kubeConfigContent);
+            $client = $cluster->client();
+
+            $secret = $client->secrets()->inNamespace('default')->get('db-secret');
+            self::$secret = $secret->getData();
+
+            if (empty(self::$secret)) {
+                throw new \RuntimeException('Failed to retrieve Kubernetes secret data.');
+            }
+        } catch (KubernetesException $e) {
+            throw new \RuntimeException('Failed to connect to Kubernetes: ' . $e->getMessage());
         }
     }
 
@@ -33,7 +50,7 @@ abstract class Config {
      * the `getHost` function.
      */
     public static function getHost(): string {
-        return getenv('MYSQL_DB_HOST') ?: base64_decode(self::$secret['data']['MYSQL_DB_HOST']);
+        return getenv('MYSQL_DB_HOST') ?: base64_decode(self::$secret['MYSQL_DB_HOST']);
     }
 
     /**
@@ -44,7 +61,7 @@ abstract class Config {
      * `MYSQL_DB_USER`.
      */
     public static function getUser(): string {
-        return getenv('MYSQL_DB_USER') ?: base64_decode(self::$secret['data']['MYSQL_DB_USER']);
+        return getenv('MYSQL_DB_USER') ?: base64_decode(self::$secret['MYSQL_DB_USER']);
     }
 
     /**
@@ -54,7 +71,7 @@ abstract class Config {
      * @return string The `MYSQL_ROOT_PASSWORD` environment variable is being returned as a string.
      */
     public static function getPassword(): string {
-        return getenv('MYSQL_ROOT_PASSWORD') ?: base64_decode(self::$secret['data']['MYSQL_ROOT_PASSWORD']);
+        return getenv('MYSQL_ROOT_PASSWORD') ?: base64_decode(self::$secret['MYSQL_ROOT_PASSWORD']);
     }
 
     /**
@@ -65,7 +82,7 @@ abstract class Config {
      * `MYSQL_DATABASE`.
      */
     public static function getDatabase(): string {
-        return getenv('MYSQL_DATABASE') ?: base64_decode(self::$secret['data']['MYSQL_DATABASE']);
+        return getenv('MYSQL_DATABASE') ?: base64_decode(self::$secret['MYSQL_DATABASE']);
     }
 
     /**
@@ -76,7 +93,7 @@ abstract class Config {
      * `MYSQL_DB_PORT` as a string.
      */
     public static function getPort(): string {
-        return getenv('MYSQL_DB_PORT') ?: base64_decode(self::$secret['data']['MYSQL_DB_PORT']);
+        return getenv('MYSQL_DB_PORT') ?: base64_decode(self::$secret['MYSQL_DB_PORT']);
     }
 
 }
