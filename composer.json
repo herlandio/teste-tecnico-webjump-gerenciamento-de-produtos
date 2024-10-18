@@ -11,7 +11,9 @@
         "php": "^7.3|^8.0",
         "ext-json": "*",
         "bramus/router": "~1.6",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "renoki-co/php-k8s": "^3.1",
+        "symfony/yaml": "^5.4"
     },
     "autoload": {
         "psr-4": {

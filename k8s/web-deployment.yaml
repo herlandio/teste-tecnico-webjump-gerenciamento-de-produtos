@@ -26,8 +26,12 @@ spec:
         volumeMounts:
         - name: web-volume
           mountPath: /var/www/html/manager-products
+        - name: kube-config
+          mountPath: /root/.kube
       volumes:
       - name: web-volume
         persistentVolumeClaim:
           claimName: web-pvc
-
+      - name: kube-config
+        hostPath:
+          path: /home/stday/.kube

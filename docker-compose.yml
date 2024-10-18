@@ -11,6 +11,7 @@ services:
       && apache2-foreground"
     volumes:
       - .:/var/www/html
+      - ~/.kube:/root/.kube
     depends_on:
       - db
 

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Config;
 
+use Symfony\Component\Yaml\Yaml;
+use RenokiCo\PhpK8s\KubernetesCluster;
+use RuntimeException;
+
 /* The `abstract class Config` is defining a base class named `Config` that cannot be instantiated on
 its own but can be extended by other classes. This class serves as a blueprint for other classes to
 inherit common properties and methods. In this specific case, the `Config` class contains static
@@ -11,21 +15,32 @@ methods for retrieving configuration values related to a MySQL database connecti
 abstract class Config {
 
     /**
-     * The function `getSecretValue` retrieves the value of a secret from the Kubernetes secret.
+     * Configure client k8s
      *
-     * @param string $key The key for the secret value to retrieve.
-     * @return string The secret value for the given key.
+     * @return KubernetesCluster
+     */
+    private static function getK8sClient(): KubernetesCluster {
+        $kubeConfig = Yaml::parseFile('/root/.kube/config');
+        return KubernetesCluster::fromKubeConfigArray($kubeConfig);
+    }
+
+    /**
+     * The function `getSecretValue` find value secret Kubernetes.
+     *
+     * @param string $key Secret key.
+     * @return string Value key.
+     * @throws RuntimeException If not found key.
      */
     private static function getSecretValue(string $key): string {
-        $command = "kubectl get secret db-secret -n default -o jsonpath='{.data.$key}'";
-        $output = [];
-        $returnVar = 0;
-        exec($command, $output, $returnVar);
-        if ($returnVar === 0 && isset($output[0])) {
-            return base64_decode(trim($output[0]));
-        } else {
-            throw new \RuntimeException("Erro ao obter o Secret para a chave: $key");
+        $client = self::getK8sClient();
+        
+        $secret = $client->secret()->getByName('db-secret', ['default']);
+
+        if ($secret && $secret->hasData($key)) {
+            return base64_decode($secret->getData()[$key]);
         }
+
+        throw new RuntimeException("Error get key for: $key");
     }
 
     /**
