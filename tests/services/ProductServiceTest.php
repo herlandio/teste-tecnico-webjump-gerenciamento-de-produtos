@@ -94,10 +94,8 @@ class ProductServiceTest extends TestCase
         $this->repositoryMock->expects($this->once())
             ->method('updateProduct')
             ->with($this->isInstanceOf(Products::class));
-            
-        ob_start();
+
         $this->productService->updateProduct($data);
-        ob_end_clean();
     }
 
     /**
