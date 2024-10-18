@@ -12,7 +12,10 @@ Como Executar o Projeto
     ```
     git clone https://github.com/herlandio/gerenciamento-de-produtos.git
     ```
-2. Crie o configmap, substitua com seu usuario em "user":
+2. Crie o ConfigMap, 
+    
+    Substitua "user" pelo seu nome de usuário no comando abaixo:
+
     ```
     kubectl create configmap kube-config --from-file=config=/home/<user>/.kube/config
     ```
@@ -25,14 +28,36 @@ Como Executar o Projeto
 4. Requisitos:
     - Certifique-se de ter o Docker e o Kubernetes habilitados em sua máquina.
 
-5. Acesse a Aplicação: Abra seu navegador e vá para: 
+5. Acesse a Aplicação: 
+    
+    Abra seu navegador e vá para: 
     ```
     http://localhost
     ```
-## Tests
+## Testes
 
-Pegue o nome do pod com o comando `kubectl get pods` e coloque abaixo: 
+Para executar os testes, obtenha o nome do pod com o comando:
+
+```
+kubectl get pods
+```
+
+Em seguida, execute os testes no pod:
+ 
 ```
  kubectl exec <nomedopod> -- vendor/bin/phpunit tests
 ```
 
+### Para Usar com Docker Compose
+
+```
+docker-compose up -d
+```
+
+## Testes via Docker
+
+Para executar os testes usando Docker, utilize o comando:
+
+```
+docker exec teste-tecnico-webjump-gerenciamento-de-produtos-web-1 vendor/bin/phpunit tests
+```

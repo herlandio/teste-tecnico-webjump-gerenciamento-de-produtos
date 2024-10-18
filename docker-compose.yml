@@ -6,15 +6,17 @@ services:
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
+      - KUBE_CONFIG_PATH=/root/.kube/config
     command: >
       bash -c "composer install --no-interaction --prefer-dist --optimize-autoloader
       && apache2-foreground"
     volumes:
       - .:/var/www/html
+      - ~/.kube/config:/root/.kube/config
     depends_on:
-      - db
+      - db-service
 
-  db:
+  db-service:
     image: mysql:5.7
     container_name: mysql
     environment:
