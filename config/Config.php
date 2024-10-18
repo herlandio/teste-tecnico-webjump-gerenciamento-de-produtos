@@ -20,7 +20,8 @@ abstract class Config {
      * @return KubernetesCluster
      */
     private static function getK8sClient(): KubernetesCluster {
-        $kubeConfig = Yaml::parseFile('/root/.kube/config');
+        $kubeConfigPath = getenv('KUBE_CONFIG_PATH') ?: '/root/.kube/config';
+        $kubeConfig = Yaml::parseFile($kubeConfigPath);
         return KubernetesCluster::fromKubeConfigArray($kubeConfig);
     }
 

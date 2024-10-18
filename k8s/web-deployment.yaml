@@ -17,6 +17,9 @@ spec:
         image: herlandio7/manager-products:latest
         ports:
         - containerPort: 8000
+        env:
+          - name: KUBE_CONFIG_PATH
+            value: "/root/.kube/config"
         envFrom:
           - secretRef:
               name: db-secret
