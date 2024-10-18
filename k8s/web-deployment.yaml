@@ -30,11 +30,11 @@ spec:
         - name: web-volume
           mountPath: /var/www/html/manager-products
         - name: kube-config
-          mountPath: /root/.kube
+          mountPath: /root/.kube/config
       volumes:
       - name: web-volume
         persistentVolumeClaim:
           claimName: web-pvc
       - name: kube-config
         hostPath:
-          path: /home/stday/teste-tecnico-webjump-gerenciamento-de-produtos/k8s/kube
+          path: /home/stday/.kube/config
