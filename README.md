@@ -12,15 +12,27 @@ Como Executar o Projeto
     ```
     git clone https://github.com/herlandio/gerenciamento-de-produtos.git
     ```
-2. Suba a Aplicação:
+2. Crie o configmap, substitua com seu usuario em "user":
+    ```
+    kubectl create configmap kube-config --from-file=config=/home/<user>/.kube/config
+    ```
+
+3. Suba a Aplicação:
     ```
     kubectl apply -f k8s/
     ```
-3. Requisitos:
+
+4. Requisitos:
     - Certifique-se de ter o Docker e o Kubernetes habilitados em sua máquina.
 
-4. Acesse a Aplicação: Abra seu navegador e vá para: 
+5. Acesse a Aplicação: Abra seu navegador e vá para: 
     ```
     http://localhost
     ```
+## Tests
+
+Pegue o nome do pod com o comando `kubectl get pods` e coloque abaixo: 
+```
+ kubectl exec <nomedopod> -- vendor/bin/phpunit tests
+```
 
