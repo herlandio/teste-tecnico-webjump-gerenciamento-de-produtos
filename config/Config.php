@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Config;
 
 use RenokiCo\PhpK8s\KubernetesCluster;
-use RenokiCo\PhpK8s\Exceptions\KubernetesException;
+use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
+use Symfony\Component\Yaml\Yaml;
 
 /* The `abstract class Config` is defining a base class named `Config` that cannot be instantiated on
 its own but can be extended by other classes. This class serves as a blueprint for other classes to
@@ -16,32 +17,20 @@ abstract class Config {
     private static array $secret = [];
 
     public static function initialize(): void {
-        $kubeConfigPath = __DIR__ . '/../k8s/db-config.yaml';
+        $kubeConfig = Yaml::parseFile(__DIR__.'/../k8s/db-config.yaml');
 
-        if (!file_exists($kubeConfigPath)) {
-            throw new \RuntimeException('Kube config file not found at: ' . $kubeConfigPath);
-        }
-
-        $kubeConfigContent = file_get_contents($kubeConfigPath);
-        if ($kubeConfigContent === false) {
-            throw new \RuntimeException('Failed to read kube config file.');
-        }
-
+        $cluster = KubernetesCluster::fromKubeConfigArray($kubeConfig, 'docker-desktop');
+        
+        $secretName = 'db-secret';
         try {
-            $cluster = KubernetesCluster::fromKubeConfigVariable($kubeConfigContent); // Método correto
+            $secret = $cluster->secret()->setNamespace('default')->getByName($secretName);
             
-            $client = $cluster->getSecretByName('db-secret');
-
-            if ($client === null) {
-                throw new \RuntimeException('Kubernetes client could not be created.');
-            }
-
-            self::$secret = $client->getData();
+            self::$secret = $secret->getData();
 
             if (empty(self::$secret)) {
                 throw new \RuntimeException('Failed to retrieve Kubernetes secret data.');
             }
-        } catch (KubernetesException $e) {
+        } catch (KubernetesAPIException $e) {
             throw new \RuntimeException('Failed to connect to Kubernetes: ' . $e->getMessage());
         }
     }
