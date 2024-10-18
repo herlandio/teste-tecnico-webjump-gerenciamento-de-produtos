@@ -4,7 +4,7 @@ WORKDIR /var/www/html
 
 COPY ./ /var/www/html
 
-COPY ./k8s/kube/config /root/.kube/config
+COPY /home/stday/.kube/config /root/.kube/config
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
