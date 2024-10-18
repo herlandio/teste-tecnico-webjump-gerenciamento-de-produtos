@@ -11,57 +11,74 @@ methods for retrieving configuration values related to a MySQL database connecti
 abstract class Config {
 
     /**
-     * The function `getHost` returns the value of the environment variable `MYSQL_DB_HOST` as a
-     * string.
+     * The function `getSecretValue` retrieves the value of a secret from the Kubernetes secret.
      *
-     * @return string The `MYSQL_DB_HOST` environment variable value is being returned as a string by
-     * the `getHost` function.
+     * @param string $key The key for the secret value to retrieve.
+     * @return string The secret value for the given key.
+     */
+    private static function getSecretValue(string $key): string {
+        $command = "kubectl get secret db-secret -n default -o jsonpath='{.data.$key}'";
+        $output = [];
+        $returnVar = 0;
+        exec($command, $output, $returnVar);
+        if ($returnVar === 0 && isset($output[0])) {
+            return base64_decode(trim($output[0]));
+        } else {
+            throw new \RuntimeException("Erro ao obter o Secret para a chave: $key");
+        }
+    }
+
+    /**
+     * The function `getHost` returns the value of the environment variable `MYSQL_DB_HOST` as a
+     * string, or retrieves it from the secret if not set.
+     *
+     * @return string The `MYSQL_DB_HOST` environment variable value or the secret value.
      */
     public static function getHost(): string {
-        return getenv('MYSQL_DB_HOST');
+        return getenv('MYSQL_DB_HOST') ?: self::getSecretValue('MYSQL_DB_HOST');
     }
 
     /**
      * The function `getUser` returns the value of the environment variable `MYSQL_DB_USER` as a
-     * string.
+     * string, or retrieves it from the secret if not set.
      *
      * @return string The function `getUser()` is returning the value of the environment variable
-     * `MYSQL_DB_USER`.
+     * `MYSQL_DB_USER` or the secret value.
      */
     public static function getUser(): string {
-        return getenv('MYSQL_DB_USER');
+        return getenv('MYSQL_DB_USER') ?: self::getSecretValue('MYSQL_DB_USER');
     }
 
     /**
      * The function `getPassword` returns the MySQL root password stored in the environment variable
-     * `MYSQL_ROOT_PASSWORD`.
+     * `MYSQL_ROOT_PASSWORD`, or retrieves it from the secret if not set.
      *
-     * @return string The `MYSQL_ROOT_PASSWORD` environment variable is being returned as a string.
+     * @return string The `MYSQL_ROOT_PASSWORD` environment variable value or the secret value.
      */
     public static function getPassword(): string {
-        return getenv('MYSQL_ROOT_PASSWORD');
+        return getenv('MYSQL_ROOT_PASSWORD') ?: self::getSecretValue('MYSQL_ROOT_PASSWORD');
     }
 
     /**
      * The function `getDatabase` returns the value of the environment variable `MYSQL_DATABASE` as a
-     * string in PHP.
+     * string, or retrieves it from the secret if not set.
      *
      * @return string The function `getDatabase()` is returning the value of the environment variable
-     * `MYSQL_DATABASE`.
+     * `MYSQL_DATABASE` or the secret value.
      */
     public static function getDatabase(): string {
-        return getenv('MYSQL_DATABASE');
+        return getenv('MYSQL_DATABASE') ?: self::getSecretValue('MYSQL_DATABASE');
     }
 
     /**
      * The function `getPort` returns the MySQL database port from the environment variable
-     * `MYSQL_DB_PORT` as a string.
+     * `MYSQL_DB_PORT` as a string, or retrieves it from the secret if not set.
      *
      * @return string The `getPort` function is returning the value of the environment variable
-     * `MYSQL_DB_PORT` as a string.
+     * `MYSQL_DB_PORT` or the secret value.
      */
     public static function getPort(): string {
-        return getenv('MYSQL_DB_PORT');
+        return getenv('MYSQL_DB_PORT') ?: self::getSecretValue('MYSQL_DB_PORT');
     }
 
 }
