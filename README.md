@@ -21,11 +21,21 @@ Como Executar o Projeto
 3. Requisitos:
     - Certifique-se de ter o Docker e o Kubernetes habilitados em sua máquina.
 
+4. Liste os serviços:
+    
+    ```
+    kubectl get services
+    ```
+5.  Coloque o serviço abaixo:
+
+    ```
+    kubectl port-forward svc/<meuservico> 8000:80
+    ```
 4. Acesse a Aplicação: 
     
     Abra seu navegador e vá para: 
     ```
-    http://localhost
+    http://localhost:8000
     ```
 ## Testes
 

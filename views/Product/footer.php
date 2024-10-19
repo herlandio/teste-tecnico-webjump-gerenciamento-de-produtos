@@ -53,7 +53,7 @@
 
                 formData.append('category', JSON.stringify(categories));
 
-                fetch('http://localhost/products/save', {
+                fetch('http://localhost:8000/products/save', {
                     method: 'POST',
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
                     body: formData.toString()

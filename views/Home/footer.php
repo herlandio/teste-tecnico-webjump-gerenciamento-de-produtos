@@ -30,7 +30,7 @@
                     formData.append('quantity', document.getElementsByClassName("quantity")[i].value);
                     formData.append('id', document.getElementsByClassName("id")[i].value);
 
-                    fetch('http://localhost/products/update', {
+                    fetch('http://localhost:8000/products/update', {
                         method: 'POST',
                         headers: { "Content-Type": "application/x-www-form-urlencoded" },
                         body: formData.toString()
@@ -81,7 +81,7 @@
                 const formData = new URLSearchParams();
                 formData.append('newcategory', document.getElementById("newcategory").value);
 
-                fetch('http://localhost/categories/categories', {
+                fetch('http://localhost:8000/categories/categories', {
                     method: 'POST',
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
                     body: formData.toString()
