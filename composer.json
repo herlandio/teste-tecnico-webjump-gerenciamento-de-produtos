@@ -17,19 +17,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Controllers\\": "controllers",
-            "Config\\": "config",
-            "Database\\": "database",
-            "Help\\": "help",
-            "Models\\": "models",
-            "Views\\": "views",
-            "Repositories\\": "repositories",
-            "Services\\": "services"
+            "Controllers\\": "controllers/",
+            "Config\\": "config/",
+            "Database\\": "database/",
+            "Help\\": "help/",
+            "Models\\": "models/",
+            "Views\\": "views/",
+            "Repositories\\": "repositories/",
+            "Services\\": "services/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests"
+            "Tests\\": "tests/"
         }
     },
     "require-dev": {
