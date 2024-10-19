@@ -17,9 +17,6 @@ spec:
         image: herlandio7/manager-products:latest
         ports:
         - containerPort: 8000
-        env:
-          - name: KUBE_CONFIG_PATH
-            value: "/root/.kube/config"
         envFrom:
           - secretRef:
               name: db-secret
@@ -29,13 +26,7 @@ spec:
         volumeMounts:
         - name: web-volume
           mountPath: /var/www/html/manager-products
-        - name: kube-config
-          mountPath: /root/.kube/config
-          subPath: config
       volumes:
       - name: web-volume
         persistentVolumeClaim:
           claimName: web-pvc
-      - name: kube-config
-        configMap:
-          name: kube-config

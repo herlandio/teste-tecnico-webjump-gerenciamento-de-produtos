@@ -8,14 +8,15 @@ services:
       - APACHE_RUN_GROUP=www-data
       - KUBE_CONFIG_PATH=/var/www/html/.kube/config
     command: >
-      bash -c "chown root:root /var/www/html/.kube/config
-      && composer install --no-interaction --prefer-dist --optimize-autoloader
+      bash -c "composer install --no-interaction --prefer-dist --optimize-autoloader
       && apache2-foreground"
     volumes:
       - .:/var/www/html
       - ~/.kube/config:/var/www/html/.kube/config
     depends_on:
       - db-service
+    networks:
+      - manager-products-network
 
   db-service:
     image: mysql:5.7
@@ -27,3 +28,9 @@ services:
       - ./mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3307:3306"
+    networks:
+      - manager-products-network
+
+networks:
+  manager-products-network:
+  
