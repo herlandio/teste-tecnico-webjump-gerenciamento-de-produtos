@@ -12,7 +12,6 @@ use RuntimeException;
 abstract class ConfigK8s {
 
     public const KUBE_CONFIG_PATH = 'KUBE_CONFIG_PATH';
-    public const DOCKER_COMPOSE_CONFIG_PATH = 'DOCKER_COMPOSE_CONFIG_PATH';
     public const SECRET_NAME = 'db-secret';
     public const NAMESPACE = 'default';
 
@@ -22,7 +21,7 @@ abstract class ConfigK8s {
      * @return KubernetesCluster
      */
     private static function getK8sClient(): KubernetesCluster {
-        $kubeConfigPath = getenv(self::KUBE_CONFIG_PATH) ?: getenv(self::DOCKER_COMPOSE_CONFIG_PATH);
+        $kubeConfigPath = getenv(self::KUBE_CONFIG_PATH);
         $kubeConfig = Yaml::parseFile($kubeConfigPath);
         return KubernetesCluster::fromKubeConfigArray($kubeConfig);
     }
