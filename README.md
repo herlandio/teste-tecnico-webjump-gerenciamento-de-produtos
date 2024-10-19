@@ -12,23 +12,16 @@ Como Executar o Projeto
     ```
     git clone https://github.com/herlandio/gerenciamento-de-produtos.git
     ```
-2. Crie o ConfigMap, 
-    
-    Substitua "user" pelo seu nome de usuário no comando abaixo:
 
-    ```
-    kubectl create configmap kube-config --from-file=config=/home/<user>/.kube/config
-    ```
-
-3. Suba a Aplicação:
+2. Suba a Aplicação:
     ```
     kubectl apply -f k8s/
     ```
 
-4. Requisitos:
+3. Requisitos:
     - Certifique-se de ter o Docker e o Kubernetes habilitados em sua máquina.
 
-5. Acesse a Aplicação: 
+4. Acesse a Aplicação: 
     
     Abra seu navegador e vá para: 
     ```
@@ -53,7 +46,12 @@ Em seguida, execute os testes no pod:
 ```
 docker-compose up -d
 ```
-
+1. Acesse a Aplicação: 
+    
+    Abra seu navegador e vá para: 
+    ```
+    http://localhost:8000
+    ```
 ## Testes via Docker
 
 Para executar os testes usando Docker, utilize o comando:
