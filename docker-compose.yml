@@ -6,13 +6,14 @@ services:
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
-      - KUBE_CONFIG_PATH=/root/.kube/config
+      - KUBE_CONFIG_PATH=/var/www/html/.kube/config
     command: >
-      bash -c "composer install --no-interaction --prefer-dist --optimize-autoloader
+      bash -c "chown root:root /var/www/html/.kube/config
+      && composer install --no-interaction --prefer-dist --optimize-autoloader
       && apache2-foreground"
     volumes:
       - .:/var/www/html
-      - ~/.kube/config:/root/.kube/config
+      - ~/.kube/config:/var/www/html/.kube/config
     depends_on:
       - db-service
 

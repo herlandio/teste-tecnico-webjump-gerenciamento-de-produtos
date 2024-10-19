@@ -19,7 +19,7 @@ spec:
         - containerPort: 8000
         env:
           - name: KUBE_CONFIG_PATH
-            value: "/root/.kube/config"
+            value: "/var/www/html/.kube/config"
         envFrom:
           - secretRef:
               name: db-secret
