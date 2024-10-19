@@ -16,13 +16,22 @@ use Config\Config;
  */
 final class ConfigTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        putenv('MYSQL_DB_HOST=localhost');
+        putenv('MYSQL_DB_USER=root');
+        putenv('MYSQL_ROOT_PASSWORD=secret');
+        putenv('MYSQL_DATABASE=test_db');
+        putenv('MYSQL_DB_PORT=3306');
+    }
+
     /**
      * Tests the getHost method of the Config class.
      * Checks if the returned value matches the expected one.
      */
     public function testGetHost(): void
     {
-        $this->assertSame(base64_decode('ZGItc2VydmljZQ=='), Config::getHost());
+        $this->assertSame('localhost', Config::getHost());
     }
 
     /**
@@ -31,7 +40,7 @@ final class ConfigTest extends TestCase
      */
     public function testGetUser(): void
     {
-        $this->assertSame(base64_decode('cm9vdA=='), Config::getUser());
+        $this->assertSame('root', Config::getUser());
     }
 
     /**
@@ -40,7 +49,7 @@ final class ConfigTest extends TestCase
      */
     public function testGetPassword(): void
     {
-        $this->assertSame(base64_decode('cm9vdA=='), Config::getPassword());
+        $this->assertSame('secret', Config::getPassword());
     }
 
     /**
@@ -49,7 +58,7 @@ final class ConfigTest extends TestCase
      */
     public function testGetDatabase(): void
     {
-        $this->assertSame(base64_decode('cHJvZHVjdHM='), Config::getDatabase());
+        $this->assertSame('test_db', Config::getDatabase());
     }
 
     /**
@@ -58,6 +67,15 @@ final class ConfigTest extends TestCase
      */
     public function testGetPort(): void
     {
-        $this->assertSame(base64_decode('MzMwNg=='), Config::getPort());
+        $this->assertSame('3306', Config::getPort());
+    }
+
+    protected function tearDown(): void
+    {
+        putenv('MYSQL_DB_HOST');
+        putenv('MYSQL_DB_USER');
+        putenv('MYSQL_ROOT_PASSWORD');
+        putenv('MYSQL_DATABASE');
+        putenv('MYSQL_DB_PORT');
     }
 }
