@@ -17,7 +17,7 @@ abstract class Config {
      * @return string The `MYSQL_DB_HOST` environment variable value or the secret value.
      */
     public static function getHost(): string {
-        return getenv('MYSQL_DB_HOST') ?: ConfigK8s::getSecretValue('MYSQL_DB_HOST');
+        return ConfigK8s::getSecretValue('MYSQL_DB_HOST');
     }
 
     /**
@@ -28,7 +28,7 @@ abstract class Config {
      * `MYSQL_DB_USER` or the secret value.
      */
     public static function getUser(): string {
-        return getenv('MYSQL_DB_USER') ?: ConfigK8s::getSecretValue('MYSQL_DB_USER');
+        return ConfigK8s::getSecretValue('MYSQL_DB_USER');
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class Config {
      * @return string The `MYSQL_ROOT_PASSWORD` environment variable value or the secret value.
      */
     public static function getPassword(): string {
-        return getenv('MYSQL_ROOT_PASSWORD') ?: ConfigK8s::getSecretValue('MYSQL_ROOT_PASSWORD');
+        return ConfigK8s::getSecretValue('MYSQL_ROOT_PASSWORD');
     }
 
     /**
@@ -49,7 +49,7 @@ abstract class Config {
      * `MYSQL_DATABASE` or the secret value.
      */
     public static function getDatabase(): string {
-        return getenv('MYSQL_DATABASE') ?: ConfigK8s::getSecretValue('MYSQL_DATABASE');
+        return ConfigK8s::getSecretValue('MYSQL_DATABASE');
     }
 
     /**
@@ -60,7 +60,7 @@ abstract class Config {
      * `MYSQL_DB_PORT` or the secret value.
      */
     public static function getPort(): string {
-        return getenv('MYSQL_DB_PORT') ?: ConfigK8s::getSecretValue('MYSQL_DB_PORT');
+        return ConfigK8s::getSecretValue('MYSQL_DB_PORT');
     }
 
 }
